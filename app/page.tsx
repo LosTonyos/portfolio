@@ -1,6 +1,5 @@
 import { Cog, Wrench, BarChart2, Monitor, Globe, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { skillCategories } from "@/data/skills";
-import ContactForm from "@/components/ContactForm";
 import HeroSection from "@/components/HeroSection";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import CareerTimeline from "@/components/CareerTimeline";
@@ -106,14 +105,35 @@ export default function Home() {
             Disponible pour une alternance ou simplement pour échanger. N&apos;hésitez pas à me contacter.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10" style={{ alignItems: "start" }}>
-            {/* Coordonnées */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-8" style={{ alignItems: "start" }}>
+            {/* Email + Téléphone */}
             <div className="space-y-5">
               {[
                 { icon: <Mail size={18} style={{ color: "var(--accent)" }} />, label: "Email", value: "antoine.clavieres@ensam.eu", href: "mailto:antoine.clavieres@ensam.eu" },
                 { icon: <Phone size={18} style={{ color: "var(--accent)" }} />, label: "Téléphone", value: "06 95 71 19 94", href: "tel:+33695711994" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(217,119,6,0.1)" }}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide font-semibold mb-0.5" style={{ color: "var(--muted)" }}>{item.label}</p>
+                    <a href={item.href}
+                      className="text-sm font-medium transition-colors hover:text-[var(--accent)]"
+                      style={{ color: "var(--anthracite)" }}>
+                      {item.value}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Localisation + LinkedIn */}
+            <div className="space-y-5">
+              {[
                 { icon: <MapPin size={18} style={{ color: "var(--accent)" }} />, label: "Localisation", value: "Bordeaux, France", href: undefined },
-                { icon: <ExternalLink size={18} style={{ color: "var(--accent)" }} />, label: "LinkedIn", value: "linkedin.com/in/antoine-clavieres-734a522b8", href: "https://www.linkedin.com/in/antoine-clavieres-734a522b8/" },
+                { icon: <ExternalLink size={18} style={{ color: "var(--accent)" }} />, label: "LinkedIn", value: "linkedin.com/in/antoine-clavieres", href: "https://www.linkedin.com/in/antoine-clavieres-734a522b8/" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
@@ -123,8 +143,7 @@ export default function Home() {
                   <div>
                     <p className="text-xs uppercase tracking-wide font-semibold mb-0.5" style={{ color: "var(--muted)" }}>{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined}
-                        rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      <a href={item.href} target="_blank" rel="noopener noreferrer"
                         className="text-sm font-medium transition-colors hover:text-[var(--accent)]"
                         style={{ color: "var(--anthracite)" }}>
                         {item.value}
@@ -135,11 +154,6 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Formulaire */}
-            <div style={{ marginTop: "-5rem" }}>
-              <ContactForm />
             </div>
           </div>
         </div>
