@@ -5,10 +5,10 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "#hero", label: "Accueil" },
-  { href: "#parcours", label: "Parcours" },
+  { href: "#parcours", label: "À propos" },
   { href: "#projects", label: "Projets" },
   { href: "#competences", label: "Compétences" },
-  { href: "#contact", label: "Contact" },
+  { href: "#contact", label: "Contacts" },
 ];
 
 const CV_LINK = "https://drive.google.com/file/d/1HyZQe8eJ5TVNZhMflzD6DpHCImKyR8bW/view?usp=drive_link";

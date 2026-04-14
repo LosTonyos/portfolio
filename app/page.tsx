@@ -34,9 +34,6 @@ export default function Home() {
       ══════════════════════════════════════ */}
       <section id="projects" className="section-padding">
         <div className="container-custom">
-          <p className="text-xs uppercase tracking-widest font-semibold mb-2" style={{ color: "var(--muted)" }}>
-            Réalisations
-          </p>
           <h2 className="heading-lg gradient-heading mb-2">Projets & expériences</h2>
           <div className="divider" />
           <p className="text-sm mt-4 mb-8 max-w-xl" style={{ color: "var(--muted)" }}>
@@ -52,9 +49,6 @@ export default function Home() {
       ══════════════════════════════════════ */}
       <section id="competences" className="section-padding section-darker">
         <div className="container-custom">
-          <p className="text-xs uppercase tracking-widest font-semibold mb-2" style={{ color: "var(--muted)" }}>
-            Savoir-faire
-          </p>
           <h2 className="heading-lg gradient-heading mb-2">Compétences</h2>
           <div className="divider" />
           <p className="text-sm mt-4 mb-10 max-w-xl" style={{ color: "var(--muted)" }}>
@@ -96,10 +90,7 @@ export default function Home() {
       ══════════════════════════════════════ */}
       <section id="contact" className="section-padding section-dark">
         <div className="container-custom">
-          <p className="text-xs uppercase tracking-widest font-semibold mb-2" style={{ color: "var(--muted)" }}>
-            Échangeons
-          </p>
-          <h2 className="heading-lg gradient-heading mb-2">Contact</h2>
+          <h2 className="heading-lg gradient-heading mb-2">Contacts</h2>
           <div className="divider" />
           <p className="text-sm mt-4 mb-4" style={{ color: "var(--muted)", maxWidth: "50%" }}>
             Disponible pour une alternance ou simplement pour échanger. N&apos;hésitez pas à me contacter.
