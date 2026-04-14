@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   try {
     await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
-      to: "antoine.clavieres@ensam.eu",
+      to: "jeupour@outlook.fr",
       subject: `[Portfolio] ${sujet}`,
       text: `Nom : ${nom}\nEmail : ${email}\n\n${message}`,
       html: `
