@@ -1,5 +1,6 @@
-import { Cog, Wrench, BarChart2, Monitor, Globe, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Cog, Wrench, BarChart2, Monitor, Globe, Mail, Phone, MapPin, ExternalLink, FileText } from "lucide-react";
 import { skillCategories } from "@/data/skills";
+import { recommendations } from "@/data/recommendations";
 import HeroSection from "@/components/HeroSection";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import CareerTimeline from "@/components/CareerTimeline";
@@ -41,6 +42,61 @@ export default function Home() {
           </p>
 
           <ProjectCarousel />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          RECOMMANDATIONS
+      ══════════════════════════════════════ */}
+      <section id="recommandations" className="section-padding">
+        <div className="container-custom">
+          <h2 className="heading-lg gradient-heading mb-2">Recommandations</h2>
+          <div className="divider" />
+          <p className="text-sm mt-4 mb-8 max-w-xl" style={{ color: "var(--muted)" }}>
+            Lettres de recommandation reçues lors de mes stages et projets.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recommendations.length === 0 ? (
+              <div className="card p-6 flex flex-col items-center text-center"
+                   style={{ border: "2px dashed rgba(217,119,6,0.3)", gridColumn: "1 / -1" }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                     style={{ background: "rgba(217,119,6,0.1)" }}>
+                  <FileText size={32} style={{ color: "var(--accent)" }} />
+                </div>
+                <p className="text-sm font-medium mb-2" style={{ color: "var(--anthracite)" }}>
+                  Aucune lettre de recommandation
+                </p>
+                <p className="text-xs" style={{ color: "var(--muted)" }}>
+                  Placez vos PDFs dans <code>public/recommendations/</code> et ajoutez-les dans <code>data/recommendations.ts</code>
+                </p>
+              </div>
+            ) : (
+              recommendations.map((rec) => (
+                <a
+                  key={rec.id}
+                  href={rec.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card p-6 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                >
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                       style={{ background: "rgba(217,119,6,0.1)" }}>
+                    <FileText size={32} style={{ color: "var(--accent)" }} />
+                  </div>
+                  <p className="text-sm font-medium mb-1" style={{ color: "var(--anthracite)" }}>
+                    {rec.title}
+                  </p>
+                  <p className="text-xs mb-1" style={{ color: "var(--muted)" }}>
+                    {rec.author}
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--muted)" }}>
+                    {rec.position} • {rec.company}
+                  </p>
+                </a>
+              ))
+            )}
+          </div>
         </div>
       </section>
 

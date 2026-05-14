@@ -8,6 +8,7 @@ const navLinks = [
   { href: "#parcours", label: "À propos" },
   { href: "#projects", label: "Projets" },
   { href: "#competences", label: "Compétences" },
+  { href: "#recommandations", label: "Recommandations" },
   { href: "#contact", label: "Contacts" },
 ];
 
@@ -21,7 +22,7 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      const ids = ["hero", "parcours", "projects", "competences", "contact"];
+      const ids = ["hero", "parcours", "projects", "competences", "recommandations", "contact"];
       for (let i = ids.length - 1; i >= 0; i--) {
         const el = document.getElementById(ids[i]);
         if (el && window.scrollY >= el.offsetTop - 100) {
