@@ -19,7 +19,7 @@ export const skillCategories: SkillCategory[] = [
     title: "Management de projet",
     icon: "BarChart2",
     skills: [
-      "Gestion de projet (WBS/PBS, matrice de risques et de compétences...)",
+      "Gestion de projet (GANTT, WBS/PBS, matrice de risques et de compétences, RACI...)",
       "Lean management",
       "Communication professionnelle",
       "Gestion de conflits",
