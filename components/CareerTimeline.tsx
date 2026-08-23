@@ -108,8 +108,7 @@ export default function CareerTimeline() {
         actuellement un stage assistant ingénieur à l&apos;Institut Français de la Vigne et du
         Vin. Passionné par l&apos;innovation industrielle, le développement de solutions
         techniques concrètes et le développement durable, je suis à la recherche d&apos;une
-        alternance de 3 ans pour la formation d&apos;ingénieur de spécialité Génie Industriel
-        à l&apos;ENSAM (École Nationale Supérieure des Arts et Métiers) de Paris.
+        alternance idéalement en bureau d&apos;études, en industrialisation, en production ou encore en méthodes/amélioration continue.
       </p>
 
       {/* ── Formation | Expérience ── */}
