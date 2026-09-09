@@ -104,11 +104,9 @@ export default function CareerTimeline() {
     <div>
       {/* ── Description pleine largeur ── */}
       <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.8, marginBottom: 40 }}>
-        Étudiant en troisième année de Bachelor aux Arts et Métiers de Bordeaux, je réalise
-        actuellement un stage assistant ingénieur à l&apos;Institut Français de la Vigne et du
-        Vin. Passionné par l&apos;innovation industrielle, le développement de solutions
-        techniques concrètes et le développement durable, je suis à la recherche d&apos;une
-        alternance idéalement en bureau d&apos;études, en industrialisation, en production ou encore en méthodes/amélioration continue.
+        Actuellement titulaire d&apos;un Bachelor en Sciences et Ingénierie, spécialité Mécanique-production à l&apos;École Nationale Supérieure des Arts et Métiers (ENSAM) de Bordeaux, j&apos;ai intégré en septembre 2026 le master génie industriel - éco-ingénierie à Anglet par voie d&apos;apprentissage en partenariat avec l&apos;IFRIA.
+        <br /><br />
+        Je suis à la recherche d&apos;une alternance de deux ans, idéalement en bureau d&apos;études, en industrialisation, en production ou encore en méthodes/amélioration continue.
       </p>
 
       {/* ── Formation | Expérience ── */}

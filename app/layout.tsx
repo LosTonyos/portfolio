@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description:
     "Portfolio d'Antoine Clavières, étudiant ingénieur à l'ENSAM. Projets, compétences et expériences en ingénierie industrielle.",
   keywords: ["ingénierie industrielle", "ENSAM", "stage", "alternance", "CAO", "portfolio"],
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 };
 
 export default function RootLayout({

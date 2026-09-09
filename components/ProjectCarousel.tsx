@@ -9,6 +9,16 @@ const CARD_H = 290;
 const TRANSLATE_Z = 500;
 const AUTO_SPEED = 360 / 24000; // deg/ms → full turn in 24s
 
+// Responsive dimensions for mobile
+const getResponsiveDimensions = () => {
+  if (typeof window === 'undefined') return { w: CARD_W, h: CARD_H, z: TRANSLATE_Z };
+  const width = window.innerWidth;
+  if (width < 640) {
+    return { w: 160, h: 210, z: 350 };
+  }
+  return { w: CARD_W, h: CARD_H, z: TRANSLATE_Z };
+};
+
 
 function ModalGallery({ images, captions }: { images: string[]; captions?: string[] }) {
   const [active, setActive] = useState(0);
@@ -108,6 +118,7 @@ export default function ProjectCarousel() {
   const [isDragging, setIsDragging]   = useState(false);
   const [expandOrigin, setExpandOrigin] = useState("50% 50%");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [dimensions, setDimensions] = useState(getResponsiveDimensions());
 
   const categories = Array.from(new Set(projects.map((p) => p.category)));
   const filteredProjects = activeCategory ? projects.filter((p) => p.category === activeCategory) : projects;
@@ -123,6 +134,13 @@ export default function ProjectCarousel() {
   const hasDraggedRef = useRef(false);
   const lastTimeRef   = useRef<number | null>(null);
   const innerRef      = useRef<HTMLDivElement>(null);
+
+  // Handle resize for responsive dimensions
+  useEffect(() => {
+    const handleResize = () => setDimensions(getResponsiveDimensions());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   // ── RAF rotation loop ─────────────────────────────────
   useEffect(() => {
     let raf: number;
@@ -203,6 +221,8 @@ export default function ProjectCarousel() {
   const closeCard = () => {
     isFrozenRef.current = false;
     setSelected(null);
+    isDraggingRef.current = false;
+    setIsDragging(false);
   };
 
   return (
@@ -253,15 +273,15 @@ export default function ProjectCarousel() {
         if (!selected) { isDraggingRef.current = false; setIsDragging(false); }
       }}
       onMouseDown={handleMouseDown}
-      style={{ position: "relative", userSelect: "none", cursor: isDragging ? "grabbing" : "grab" }}
+      style={{ position: "relative", userSelect: "none", cursor: isDragging ? "grabbing" : "grab", touchAction: "none", overflow: "hidden" }}
     >
-      <div className="carousel-wrapper">
+      <div className="carousel-wrapper" style={{ overflow: "hidden", width: "100%", maxWidth: "800px", margin: "0 auto", height: `${dimensions.h + 100}px` }}>
         <div
           ref={innerRef}
           style={{
             position: "absolute",
-            width: `${CARD_W}px`,
-            height: `${CARD_H}px`,
+            width: `${dimensions.w}px`,
+            height: `${dimensions.h}px`,
             top: "50%",
             left: "50%",
             transformStyle: "preserve-3d",
@@ -274,7 +294,7 @@ export default function ProjectCarousel() {
               style={{
                 position: "absolute",
                 inset: 0,
-                transform: `rotateY(${(360 / (N || 1)) * i}deg) translateZ(${TRANSLATE_Z}px)`,
+                transform: `rotateY(${(360 / (N || 1)) * i}deg) translateZ(${dimensions.z}px)`,
               }}
             >
               {/* Float layer */}
