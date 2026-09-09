@@ -469,7 +469,7 @@ export default function ProjectCarousel() {
         </div>
       </div>
 
-      <p style={{ textAlign: "center", marginTop: "50px", fontSize: "12px", color: "var(--muted)" }}>
+      <p style={{ textAlign: "center", marginTop: "140px", fontSize: "12px", color: "var(--muted)" }}>
         Glissez pour tourner · Cliquez pour les détails
       </p>
       </div>
