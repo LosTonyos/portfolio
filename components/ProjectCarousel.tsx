@@ -113,6 +113,134 @@ function ModalGallery({ images, captions }: { images: string[]; captions?: strin
   );
 }
 
+// Mobile Grid Version - Simple card layout
+function MobileProjectGrid({ 
+  projects, 
+  categories, 
+  activeCategory, 
+  setActiveCategory,
+  selected,
+  setSelected
+}: { 
+  projects: Project[],
+  categories: string[],
+  activeCategory: string | null,
+  setActiveCategory: (cat: string | null) => void,
+  selected: Project | null,
+  setSelected: (project: Project | null) => void
+}) {
+  return (
+    <div>
+      {/* Category filter buttons */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
+        <button
+          onClick={() => setActiveCategory(null)}
+          style={{
+            padding: "6px 16px",
+            borderRadius: 9999,
+            fontSize: 13,
+            fontWeight: 600,
+            border: activeCategory === null ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
+            background: activeCategory === null ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
+            color: activeCategory === null ? "var(--accent)" : "var(--muted)",
+            cursor: "pointer",
+            transition: "all 0.2s",
+          }}
+        >
+          Tout
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            style={{
+              padding: "6px 16px",
+              borderRadius: 9999,
+              fontSize: 13,
+              fontWeight: 600,
+              border: activeCategory === cat ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
+              background: activeCategory === cat ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
+              color: activeCategory === cat ? "var(--accent)" : "var(--muted)",
+              cursor: "pointer",
+              transition: "all 0.2s",
+            }}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid of cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
+        {projects.map((project) => (
+          <div
+            key={project.slug}
+            onClick={() => setSelected(project)}
+            style={{
+              borderRadius: "12px",
+              overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.02)",
+              cursor: "pointer",
+              transition: "all 0.3s",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(217,119,6,0.3)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+            }}
+          >
+            {/* Image */}
+            {(project.coverImage ?? project.images[0]) && (
+              <div style={{
+                width: "100%",
+                height: "200px",
+                overflow: "hidden",
+                background: "#111",
+              }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={project.coverImage ?? project.images[0]} 
+                  alt={project.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: project.coverFit ?? "cover",
+                    objectPosition: project.coverFit === "contain" ? "center center" : "center 20%",
+                  }}
+                />
+              </div>
+            )}
+            
+            {/* Content */}
+            <div style={{ padding: "16px", flex: 1, display: "flex", flexDirection: "column" }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--foreground)", marginBottom: 8 }}>
+                {project.title}
+              </h3>
+              <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12, flex: 1 }}>
+                {project.context}
+              </p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                {project.category && (
+                  <span style={{ fontSize: 11, color: "var(--accent)", background: "rgba(217,119,6,0.1)", padding: "4px 8px", borderRadius: 4 }}>
+                    {project.category}
+                  </span>
+                )}
+                <span style={{ fontSize: 11, color: "var(--muted)" }}>{project.year}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectCarousel() {
   const [selected, setSelected]       = useState<Project | null>(null);
   const [isDragging, setIsDragging]   = useState(false);
@@ -226,45 +354,59 @@ export default function ProjectCarousel() {
   };
 
   return (
-    <div>
-      {/* ── Category filter buttons ── */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
-        <button
-          onClick={() => { setActiveCategory(null); angleRef.current = 0; }}
-          style={{
-            padding: "6px 16px",
-            borderRadius: 9999,
-            fontSize: 13,
-            fontWeight: 600,
-            border: activeCategory === null ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
-            background: activeCategory === null ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
-            color: activeCategory === null ? "var(--accent)" : "var(--muted)",
-            cursor: "pointer",
-            transition: "all 0.2s",
-          }}
-        >
-          Tout
-        </button>
-        {categories.map((cat) => (
+    <>
+      {/* Mobile version - visible only on small screens */}
+      <div className="sm:hidden">
+        <MobileProjectGrid 
+          projects={filteredProjects}
+          categories={categories}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </div>
+
+      {/* Desktop version - hidden on mobile */}
+      <div className="hidden sm:block">
+        {/* ── Category filter buttons ── */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
           <button
-            key={cat}
-            onClick={() => { setActiveCategory(cat); angleRef.current = 0; }}
+            onClick={() => { setActiveCategory(null); angleRef.current = 0; }}
             style={{
               padding: "6px 16px",
               borderRadius: 9999,
               fontSize: 13,
               fontWeight: 600,
-              border: activeCategory === cat ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
-              background: activeCategory === cat ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
-              color: activeCategory === cat ? "var(--accent)" : "var(--muted)",
+              border: activeCategory === null ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
+              background: activeCategory === null ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
+              color: activeCategory === null ? "var(--accent)" : "var(--muted)",
               cursor: "pointer",
               transition: "all 0.2s",
             }}
           >
-            {cat}
+            Tout
           </button>
-        ))}
-      </div>
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => { setActiveCategory(cat); angleRef.current = 0; }}
+              style={{
+                padding: "6px 16px",
+                borderRadius: 9999,
+                fontSize: 13,
+                fontWeight: 600,
+                border: activeCategory === cat ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.12)",
+                background: activeCategory === cat ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
+                color: activeCategory === cat ? "var(--accent)" : "var(--muted)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
       <div
       onMouseEnter={() => { isHoveringRef.current = true; }}
@@ -330,105 +472,106 @@ export default function ProjectCarousel() {
       <p style={{ textAlign: "center", marginTop: "140px", fontSize: "12px", color: "var(--muted)" }}>
         Glissez pour tourner · Cliquez pour les détails
       </p>
+      </div>
 
-      {/* Modal — expands from card position */}
+      {/* Modal — expands from card position, visible on both mobile and desktop */}
       {selected && (
-        <div className="carousel-modal-overlay" onClick={closeCard}>
-          <div
-            className="carousel-modal"
-            style={{ transformOrigin: expandOrigin }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="carousel-modal-close" onClick={closeCard} aria-label="Fermer">
-              <X size={18} />
-            </button>
+          <div className="carousel-modal-overlay" onClick={closeCard}>
+            <div
+              className="carousel-modal"
+              style={{ transformOrigin: expandOrigin }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="carousel-modal-close" onClick={closeCard} aria-label="Fermer">
+                <X size={18} />
+              </button>
 
-            {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", flexWrap: "wrap" }}>
-              {selected.category && <span className="carousel-modal-tag">{selected.category}</span>}
-              <span style={{ fontSize: "12px", color: "var(--muted)" }}>{selected.year}</span>
-            </div>
-            <h3 className="carousel-modal-title">{selected.title}</h3>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
-              {/* Contexte */}
-              <div className="carousel-modal-section">
-                <p className="carousel-modal-section-label">Contexte</p>
-                <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.context}</p>
+              {/* Header */}
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", flexWrap: "wrap" }}>
+                {selected.category && <span className="carousel-modal-tag">{selected.category}</span>}
+                <span style={{ fontSize: "12px", color: "var(--muted)" }}>{selected.year}</span>
               </div>
+              <h3 className="carousel-modal-title">{selected.title}</h3>
 
-              {/* Gallery */}
-              {selected.images.length > 0 && <ModalGallery images={selected.images} captions={selected.imageCaptions} />}
-
-              {/* Missions */}
-              <div className="carousel-modal-section">
-                <p className="carousel-modal-section-label">Missions</p>
-                <ul className="carousel-modal-list">
-                  {selected.missions.map((m, i) => (
-                    <li key={i}><span className="carousel-modal-bullet">›</span>{m}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Détails techniques */}
-              {selected.details && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
+                {/* Contexte */}
                 <div className="carousel-modal-section">
-                  <p className="carousel-modal-section-label">Détails techniques</p>
-                  <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.details}</p>
+                  <p className="carousel-modal-section-label">Contexte</p>
+                  <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.context}</p>
                 </div>
-              )}
 
-              {/* Moyens */}
-              {selected.moyens && (
-                <div className="carousel-modal-section">
-                  <p className="carousel-modal-section-label">Moyens</p>
-                  <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7, whiteSpace: "pre-line" }}>{selected.moyens}</p>
-                </div>
-              )}
+                {/* Gallery */}
+                {selected.images.length > 0 && <ModalGallery images={selected.images} captions={selected.imageCaptions} />}
 
-              {/* Réalisations */}
-              {selected.realisations.length > 0 && (
+                {/* Missions */}
                 <div className="carousel-modal-section">
-                  <p className="carousel-modal-section-label">Réalisations</p>
+                  <p className="carousel-modal-section-label">Missions</p>
                   <ul className="carousel-modal-list">
-                    {selected.realisations.map((r, i) => (
-                      <li key={i}><span className="carousel-modal-bullet">›</span>{r}</li>
+                    {selected.missions.map((m, i) => (
+                      <li key={i}><span className="carousel-modal-bullet">›</span>{m}</li>
                     ))}
                   </ul>
                 </div>
-              )}
 
-              {/* Bilan */}
-              <div style={{
-                padding: "16px 20px",
-                borderRadius: "10px",
-                background: "rgba(217,119,6,0.06)",
-                border: "1px solid rgba(217,119,6,0.2)",
-                borderLeft: "4px solid var(--accent)",
-              }}>
-                <p className="carousel-modal-section-label" style={{ marginBottom: "8px" }}>Bilan personnel</p>
-                <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.bilan}</p>
-              </div>
+                {/* Détails techniques */}
+                {selected.details && (
+                  <div className="carousel-modal-section">
+                    <p className="carousel-modal-section-label">Détails techniques</p>
+                    <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.details}</p>
+                  </div>
+                )}
 
-              {/* Compétences */}
-              <div style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "12px",
-                padding: "16px 20px",
-              }}>
-                <p className="carousel-modal-section-label" style={{ marginBottom: "12px" }}>Compétences développées</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {selected.skills.map((s) => (
-                    <span key={s} className="carousel-modal-skill">{s}</span>
-                  ))}
+                {/* Moyens */}
+                {selected.moyens && (
+                  <div className="carousel-modal-section">
+                    <p className="carousel-modal-section-label">Moyens</p>
+                    <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7, whiteSpace: "pre-line" }}>{selected.moyens}</p>
+                  </div>
+                )}
+
+                {/* Réalisations */}
+                {selected.realisations.length > 0 && (
+                  <div className="carousel-modal-section">
+                    <p className="carousel-modal-section-label">Réalisations</p>
+                    <ul className="carousel-modal-list">
+                      {selected.realisations.map((r, i) => (
+                        <li key={i}><span className="carousel-modal-bullet">›</span>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Bilan */}
+                <div style={{
+                  padding: "16px 20px",
+                  borderRadius: "10px",
+                  background: "rgba(217,119,6,0.06)",
+                  border: "1px solid rgba(217,119,6,0.2)",
+                  borderLeft: "4px solid var(--accent)",
+                }}>
+                  <p className="carousel-modal-section-label" style={{ marginBottom: "8px" }}>Bilan personnel</p>
+                  <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.7 }}>{selected.bilan}</p>
+                </div>
+
+                {/* Compétences */}
+                <div style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderRadius: "12px",
+                  padding: "16px 20px",
+                }}>
+                  <p className="carousel-modal-section-label" style={{ marginBottom: "12px" }}>Compétences développées</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {selected.skills.map((s) => (
+                      <span key={s} className="carousel-modal-skill">{s}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-    </div>
+        )}
+      </div>
+    </>
   );
 }
