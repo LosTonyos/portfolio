@@ -417,7 +417,7 @@ export default function ProjectCarousel() {
       onMouseDown={handleMouseDown}
       style={{ position: "relative", userSelect: "none", cursor: isDragging ? "grabbing" : "grab", touchAction: "none", overflow: "visible" }}
     >
-      <div className="carousel-wrapper" style={{ overflow: "hidden", width: "100%", maxWidth: "800px", margin: "0 auto", height: `${dimensions.h + 100}px` }}>
+      <div className="carousel-wrapper" style={{ overflow: "visible", width: "100%", maxWidth: "1200px", margin: "0 auto", height: `${dimensions.h + 100}px` }}>
         <div
           ref={innerRef}
           style={{
