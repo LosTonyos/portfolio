@@ -469,10 +469,11 @@ export default function ProjectCarousel() {
         </div>
       </div>
 
-      <p style={{ textAlign: "center", marginTop: "140px", fontSize: "12px", color: "var(--muted)" }}>
+      </div>
+
+      <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "var(--muted)" }}>
         Glissez pour tourner · Cliquez pour les détails
       </p>
-      </div>
       </div>
 
       {/* Modal — expands from card position, visible on both mobile and desktop */}
