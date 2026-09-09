@@ -113,7 +113,7 @@ function ModalGallery({ images, captions }: { images: string[]; captions?: strin
   );
 }
 
-// Mobile Grid Version - Simple card layout
+// Mobile Grid Version - Simple card layout for responsive design
 function MobileProjectGrid({ 
   projects, 
   categories, 
