@@ -473,6 +473,7 @@ export default function ProjectCarousel() {
         Glissez pour tourner · Cliquez pour les détails
       </p>
       </div>
+      </div>
 
       {/* Modal — expands from card position, visible on both mobile and desktop */}
       {selected && (
