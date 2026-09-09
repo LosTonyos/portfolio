@@ -415,7 +415,7 @@ export default function ProjectCarousel() {
         if (!selected) { isDraggingRef.current = false; setIsDragging(false); }
       }}
       onMouseDown={handleMouseDown}
-      style={{ position: "relative", userSelect: "none", cursor: isDragging ? "grabbing" : "grab", touchAction: "none", overflow: "hidden" }}
+      style={{ position: "relative", userSelect: "none", cursor: isDragging ? "grabbing" : "grab", touchAction: "none", overflow: "visible" }}
     >
       <div className="carousel-wrapper" style={{ overflow: "hidden", width: "100%", maxWidth: "800px", margin: "0 auto", height: `${dimensions.h + 100}px` }}>
         <div
