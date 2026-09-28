@@ -16,4 +16,12 @@ export const recommendations: Recommendation[] = [
     company: "Yacht Solutions",
     pdf: "/recommendations/Recommandation_Yacht_Solutions.pdf",
   },
+  {
+    id: "IFV",
+    title: "Stage assistant-ingénieur - Institut Français de la Vigne et du Vin (IFV)",
+    author: "Christian DEBORD et Marta ZAFFARONI",
+    position: "Encadrants de stage",
+    company: "Institut Français de la Vigne et du Vin (IFV)",
+    pdf: "/recommendations/Lettre_recommandation_Antoine_Clavieres.pdf",
+  },
 ];
